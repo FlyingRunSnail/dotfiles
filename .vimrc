@@ -4,13 +4,29 @@
 "
 """"""""""""""""""
 call plug#begin('~/.vim/plugged')
+  Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'install.sh',
+    \ }
+  let g:LanguageClient_serverCommands = {
+    \ 'javascript': ['/usr/local/lib/node_modules/javascript-typescript-langserver/lib/language-server-stdio.js'],
+    \ 'javascript.jsx': ['/usr/local/lib/node_modules/javascript-typescript-langserver/lib/language-server-stdio.js'],
+    \ }
+  nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+  nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  let g:deoplete#enable_at_startup = 1
+  let g:python3_host_prog = '/usr/local/Cellar/python3/3.6.3/bin/python3'
+  set completefunc=LanguageClient#complete
+
   Plug 'Raimondi/delimitMate'                                              " Provides insert mode auto-completion for quotes, parens, brackets, etc
   let delimitMate_expand_cr = 1 " autoindent on carriage return
 
   Plug 'Valloric/MatchTagAlways'                                           " Always highlights the enclosing html/xml tags
 
-  Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' } " A code-completion engine
-  let g:ycm_autoclose_preview_window_after_insertion = 1
+  " Plug 'Valloric/YouCompleteMe', { 'do': './install.py --tern-completer' } " A code-completion engine
+  " let g:ycm_autoclose_preview_window_after_insertion = 1
 
   Plug 'airblade/vim-gitgutter'                                            " Shows a git diff in the gutter (sign column) and stages/undoes hunks
 
